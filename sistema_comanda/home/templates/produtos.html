@@ -1,0 +1,297 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Gerenciar Produtos</title>
+
+    <!-- Custom fonts for this template-->
+    <link href={% static "fontawesome-free/css/all.min.css" %} rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet"
+    >
+    <link href={% static "css/sb-admin-2.min.css" %} rel="stylesheet">
+    <link href={% static "css/css.css" %} rel="stylesheet" />
+</head>
+
+<body id="page-top">
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav sidebar sidebar-dark accordion" style="background-color: #16161f" id="accordionSidebar">
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="pedidos">
+                <div class="logo-text">
+                    LIBERTÀ BAR
+                </div>
+            </a>
+
+                <hr class="sidebar-divider my-0">
+
+            <li class="nav-item">
+                <a class="nav-link" href="graficos">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span class="sidebar-text">
+                        Graficos
+                    </span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="pedidos">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span class="lb_cor">Novo pedido</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="clientes">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span class="lb_cor">Clientes Comandas</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+                    aria-expanded="true" aria-controls="collapseUtilities">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span class="lb_cor">Configurações</span>
+                </a>
+                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="produtos">Gerenciar Produtos</a>
+                        <a class="collapse-item" href="admin">Area Admin</a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+
+
+        <div id="content-wrapper" class="d-flex flex-column" style="background-color: #1e1e2f">
+            <!-- Main Content -->
+            <div id="content">
+                <!-- Begin Page Content -->
+                <div >
+                    <!-- Topbar -->
+                    <div>
+                        <nav class="navbar navbar-expand navbar-light  topbar mb-4 static-top shadow">
+                            <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                                <i class="fa fa-bars" style="color: #a3996c"></i>
+                            </button>
+                            <ul class="navbar-nav ml-auto">
+                                <div class="topbar-divider d-none d-sm-block"></div>
+                                    <!-- DROPDOWN LOGOUT -->
+                                    <li class="nav-item dropdown no-arrow">
+                                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                                                Dono do Bar
+                                            </span>
+                                            <img class="img-profile rounded-circle"
+                                                src="{% static 'img/logo.png' %}" width="50" style="search">
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                            aria-labelledby="userDropdown">
+                                            <a class="dropdown-item" href="#">
+                                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                                Profile
+                                            </a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                                Logout
+                                            </a>
+                                        </div>
+                                    </li>
+                                    <!-- DROPDOWN LOGOUT -->
+                         </nav>
+                    </div>
+                    <!-- End of Topbar -->
+
+                    <div class="container-fluid">
+                        {{ bebidaForm }}
+
+                        <div class="nav-link">
+                            <a href="#" class="btn btn-dark btn-icon-split" data-toggle="collapse" data-target="#bebida_drop" aria-expanded="true" aria-controls="bebida_drop">
+                                <span class="icon text-white-50">
+                                    <i class="fas fa-angle-down lb_cor"></i>
+                                </span>
+                                <span class="text">BEBIDAS</span>
+                            </a>
+                            <!--adicionar item-->
+                            <div class="btn adicionar_item" style="background-color: #121212" data-toggle="modal" data-target="#add_bebida">
+                                <i class="fas fa-plus  lb_cor"></i>
+                            </div>
+                            {% for bebidas in bebida %}
+                                <div id="bebida_drop" class="collapse show nav-link" aria-labelledby="headingPages" >
+                                    <div class="card border-left-success shadow h-100 py-2">
+                                        <div class="card-body">
+                                            <div class="row no-gutters align-items-center">
+                                                <div class="col mr-2">
+                                                    <div class="th5 mb-0 font-weight-bold text-gray-800">{{bebidas.produto}}</div>
+                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">${{bebidas.preco}}0</div>
+                                                </div>
+                                                <div class="btn " style="background-color: #121212" data-toggle="modal" data-target="#comandamodal">
+                                                    <i class="fas fa-info fa-1x lb_cor"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                 </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="nav-link">
+                            <a href="#" class="btn btn-dark btn-icon-split" data-toggle="collapse" data-target="#comida_drop" aria-expanded="true" aria-controls="comida_drop">
+                                <span class="icon text-white-50">
+                                    <i class="fas fa-angle-down lb_cor "></i>
+                                </span>
+                                <span class="text">COMIDAS</span>
+                            </a>
+                            <!--adicionar item-->
+                            <div class="btn adicionar_item" style="background-color: #121212" data-toggle="modal" data-target="#add_comida">
+                                <i class="fas fa-plus fa-1x lb_cor"></i>
+                            </div>
+                            {% for comidas in comida %}
+                                <div id="comida_drop" class="collapse show nav-link" aria-labelledby="headingPages" >
+                                    <div class="card border-left-success shadow h-100 py-2">
+                                        <div class="card-body" >
+                                            <div class="row no-gutters align-items-center">
+                                                <div class="col mr-2">
+                                                    <div class="th5 mb-0 font-weight-bold text-gray-800">{{comidas.produto}}</div>
+                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">${{comidas.preco}}0</div>
+                                                </div>
+                                                <div class="btn " style="background-color: #121212" data-toggle="modal" data-target="#comandamodal">
+                                                    <i class="fas fa-info fa-1x lb_cor"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                 </div>
+                            {% endfor %}
+                        </div>
+
+                    </div>
+                    <!-- /.container-fluid -->
+                </div>
+            <!-- End of Main Content -->
+        </div>
+        <!--End of Content Wrapper -->
+    </div>
+    <!-- End of Page Wrapper -->
+
+
+
+
+
+
+    <!-- Logout Modal-->
+        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content lb_cor" style="background-color: #121212">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                            Sair da conta?
+                        </h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+                        Será necessário refazer o login.
+                    </div>
+
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <a class="btn btn-danger" href="http://127.0.0.1:8000/">
+                            Sair
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    <!-- Adicionar bebida Modal-->
+        <div class="modal fade" id="add_bebida" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"  aria-hidden="true">
+            <div class="modal-dialog" role="document" tyle="background-color: #121212">
+                <div class="modal-content" style="background-color: #121212">
+
+                    <!--titulo-->
+                    <div class="modal-header">
+                        <h5 class=" tittle_modal_fp" id="exampleModalLabel" style="">
+                            Adicionar novo produto
+                        </h5>
+                    </div>
+
+                    <!--textos-->
+                   <form method="POST">
+                            {% csrf_token %}
+                            {{bebidaform.as_p}}
+
+                       <button class="btn lb_cor" style="background-color: #121212" type="button" data-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button class="btn lb_cor" style="background-color: #121212" data-dismiss="">
+                            <input  type="submit" name = 'bebida' class="btn tam_btn_modal" value="Adicionar" data-dismiss="" >
+                        </button>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+    <!-- Adicionar comida Modal-->
+        <div class="modal fade" id="add_comida" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"  aria-hidden="true">
+            <div class="modal-dialog" role="document" tyle="background-color: #121212">
+                <div class="modal-content" style="background-color: #121212">
+
+                    <!--titulo-->
+                    <div class="modal-header">
+                        <h5 class=" tittle_modal_fp" id="exampleModalLabel" style="">
+                            Adicionar novo produto
+                        </h5>
+                    </div>
+
+                    <!--textos-->
+                   <form method="POST">
+                            {% csrf_token %}
+                            {{comidaform.as_p}}
+
+                       <button class="btn lb_cor" style="background-color: #121212" type="button" data-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button class="btn lb_cor" style="background-color: #121212" data-dismiss="">
+                            <input  type="submit" name = 'comida' lass="btn tam_btn_modal" value="Adicionar" data-dismiss="" >
+                        </button>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src={% static "jquery/jquery.min.js" %}></script>
+    <script src={% static "bootstrap/js/bootstrap.bundle.min.js" %}></script>
+    <!-- Core plugin JavaScript-->
+    <script src={% static "jquery-easing/jquery.easing.min.js" %}></script>
+    <!-- Custom scripts for all pages-->
+    <script src={% static "js/sb-admin-2.min.js" %}></script>
+
+</body>
+
+</html>
