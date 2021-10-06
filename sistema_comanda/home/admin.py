@@ -8,4 +8,5 @@ admin.site.register(bebida)
 from .models import comida
 admin.site.register(comida)
 
-
+from .models import usuario
+admin.site.register(usuario)

@@ -9,3 +9,8 @@ class bebida (models.Model):
 class comida (models.Model):
     produto = models.CharField(max_length=30)
     preco = models.FloatField()
+
+class usuario (models.Model):
+    nome = models.CharField(max_length=30)
+    num = models.IntegerField()
+    gasto = models.FloatField()

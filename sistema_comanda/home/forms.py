@@ -1,5 +1,5 @@
 from django import forms
-from .models import bebida, comida
+from .models import bebida, comida, usuario
 
 class bebidaForm(forms.ModelForm):
     class Meta:
@@ -8,5 +8,13 @@ class bebidaForm(forms.ModelForm):
 
 class comidaForm(forms.ModelForm):
     class Meta:
-        model = bebida
+        model = comida
         fields = ['produto', 'preco']
+
+
+
+
+'''   class usuarioForm(forms.ModelForm):
+    class Meta:
+        model = usuario
+        fields = ['nome', 'num', 'gasto']   '''

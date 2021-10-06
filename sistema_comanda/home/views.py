@@ -1,12 +1,12 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import bebida, comida
+from .models import bebida, comida, usuario
 from .forms import bebidaForm, comidaForm
 
 TEMPLATES_DIRS = (
     'os.path.join(BASE_DIR, "templates")'
                 )
-#função renderiza pg.
+
 def pedidos(request):
     bebidas = bebida.objects.all()
     comidas = comida.objects.all()
@@ -22,28 +22,25 @@ def charts (request):
     return render(request, "graficos.html")
 
 def clientes (request):
-    return render(request, "clientes.html")
-
+    nomes = nome.objects.all()
+    nums = num.objects.all()
+    gastos = gasto.objects.all()
+    return render(request, 'clientes.html',
+                  {
+                   'nome': nomes,
+                   'num': nums,
+                   'gasto': gastos}
+                  )
 
 def produtos(request):
-    if request.POST.get('form_type') == 'bebida':
-        if request.method == 'POST':
-            bebidaform = bebidaForm(request.POST)
-            print('IF 1')
-            if bebidaform.is_valid():
-                print('SALVOU')
-                bebidas = bebidaform.save(commit=True)
-                bebidas.save()
-                return redirect('produtos')
-    if request.POST.get('form_type') == 'comida':
-        if request.method == 'POST':
-            comidaform = comidaForm(request.POST)
-            print('ELIF 1')
-            if comidaform.is_valid():
-                print('SALVOU')
-                comidas = comidaform.save(commit=True)
-                comidas.save
-                return redirect('produtos')
+    if request.method == 'POST':
+        bebidaform = bebidaForm(request.POST)
+        print('IF 1')
+        if bebidaform.is_valid():
+            print('SALVOU')
+            bebidas = bebidaform.save(commit=True)
+            bebidas.save()
+            return redirect('produtos')
     else:
         print('ELSE')
         bebidaform = bebidaForm()
